@@ -1,1 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="Parallel Tests" verbose="1" >
+
+<listeners>
+<listener class-name="com.core.MyTransformer"/>
+</listeners>
+
+<test name="Simple Test1">
+<classes>
+<class name="TestNGFramework.TestNGMavenGitJenkins.Test1"/>
+</classes>
+</test>
+
+</suite>
