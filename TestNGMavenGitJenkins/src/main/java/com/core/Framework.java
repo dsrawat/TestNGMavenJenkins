@@ -32,7 +32,7 @@ public class Framework {
 				String PathToConfigFile=System.getProperty("user.dir");
 				System.out.println(PathToConfigFile);
 				Properties prop=new Properties();
-				FileInputStream fp=new FileInputStream(new File(PathToConfigFile+"\\Config\\Environment.properties"));
+				FileInputStream fp=new FileInputStream(new File(PathToConfigFile+"\\Config\\Environment.prop"));
 				prop.load(fp);
 				
 				Enumeration em = prop.keys();
