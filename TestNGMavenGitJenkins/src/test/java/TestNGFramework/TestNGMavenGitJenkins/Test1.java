@@ -23,7 +23,7 @@ public class Test1 {
 	{
 		FileInputStream file=null;
 		try {
-			file = new FileInputStream(new File("E:\\LatestLocalRepo\\TestNGMavenGitJenkins\\Logs\\Log4j.properties"));
+			file = new FileInputStream(new File(System.getProperty("user.dir")+"\\Logs\\Log4j.properties"));
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
