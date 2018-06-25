@@ -13,13 +13,14 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.core.Framework;
+import com.core.UIOperator;
 
 public class Test1 {
 	Framework framework=new Framework();
 	Logger Log=null;
 	
 	@BeforeTest
-	public void beforTest() 
+	public void beforTest() throws IOException 
 	{
 		FileInputStream file=null;
 		try {
@@ -50,9 +51,11 @@ public class Test1 {
 		Log.debug("************************Browser Closed*************************************************");
 	}
 	@Test
-	public void test1()
+	public void test1() throws IOException
 	{
 		Log.debug("************************test1 execution Start*********************************************");
+		UIOperator.OpenURL();
+		UIOperator.enterText("GoogleSearch_TextBox","Selenium");
 		Assert.assertEquals(true, true);
 		Log.debug("************************test1 execution Complete*************************************************");
 		

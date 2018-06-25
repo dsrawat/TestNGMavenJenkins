@@ -3,3 +3,4 @@ TEST=https://www.google.com
 Run_URL=TEST
 BrowserType=CHROME
 DriverPath=C:\\Driver
+RepositoryPath=C:\\ObjectRepository\\ObjectRepository.xls

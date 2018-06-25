@@ -1,5 +1,7 @@
 package com.core;
 
+import java.io.IOException;
+
 public class UIOperator {
 	
 	
@@ -13,7 +15,7 @@ public class UIOperator {
 		
 	}
 	
-	public static void enterText(String OjbectName,String Value)
+	public static void enterText(String OjbectName,String Value) throws IOException
 	{
 		String Object=new Framework().readObjectRepository(OjbectName);
 		
