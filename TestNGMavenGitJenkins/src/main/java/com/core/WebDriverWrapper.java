@@ -20,7 +20,7 @@ public class WebDriverWrapper {
 					System.setProperty("webdriver.chrome.driver",DriverPath+"\\chromedriver.exe");
 					capabilities=DesiredCapabilities.chrome();
 					ChromeOptions options=new ChromeOptions();
-					options.setBinary(new File("C:\\Program Files (x86)\\Google\\Chrome Beta\\Application\\chrome.exe"));
+					options.setBinary(new File("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe"));
 					driver=new ChromeDriver(options);
 			}
 		
