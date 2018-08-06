@@ -17,9 +17,14 @@ public class WebDriverWrapper {
 		if(BrowserType.equalsIgnoreCase("Chrome"))
 			{
 					
+			
+			
+			
 					System.setProperty("webdriver.chrome.driver",DriverPath+"\\chromedriver.exe");
 					capabilities=DesiredCapabilities.chrome();
 					ChromeOptions options=new ChromeOptions();
+					if(Framework.env.get("HeadlessBrowser").equalsIgnoreCase("Yes"))
+						options.addArguments("--headless");
 					options.setBinary(new File("C:\\Program Files (x86)\\Google\\Chrome Beta\\Application\\chrome.exe"));
 					driver=new ChromeDriver(options);
 			}

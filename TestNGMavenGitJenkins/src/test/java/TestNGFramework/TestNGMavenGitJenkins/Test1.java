@@ -8,7 +8,9 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -19,7 +21,7 @@ public class Test1 {
 	Framework framework=new Framework();
 	Logger Log=null;
 	
-	@BeforeTest
+	@BeforeSuite
 	public void beforTest() throws IOException 
 	{
 		FileInputStream file=null;
@@ -43,7 +45,7 @@ public class Test1 {
 		
 	}
 	
-	@AfterTest
+	@AfterSuite
 	public void afterTest()
 	{
 		
