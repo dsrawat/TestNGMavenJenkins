@@ -12,6 +12,7 @@
 <test name="Simple Test1">
 <classes>
 <class name="TestNGFramework.TestNGMavenGitJenkins.Test1"/>
+<class name="TestNGFramework.TestNGMavenGitJenkins.Test2"/>
 </classes>
 </test>
 <test name="test2">

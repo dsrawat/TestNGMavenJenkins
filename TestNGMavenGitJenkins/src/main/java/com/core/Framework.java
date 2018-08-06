@@ -17,12 +17,12 @@ import org.openqa.selenium.WebDriver;
 
 public class Framework {
 
-	public WebDriverWrapper driverWrapper;
+	public static WebDriverWrapper driverWrapper;
 	public static WebDriver driver;
 	public static HashMap<String,String> env=new HashMap<String,String>();
 	HSSFWorkbook wb;
 	HSSFSheet sh;
-	public void startDriver() throws IOException
+	public static void startDriver() throws IOException
 	{
 		
 		driverWrapper=new WebDriverWrapper();
@@ -30,7 +30,7 @@ public class Framework {
 		initializeRepository();
 	}
 	
-	public void collectEnvironmentData() throws IOException{
+	public static void collectEnvironmentData() throws IOException{
 		
 		//Load Properties File
 				String PathToConfigFile=System.getProperty("user.dir");
@@ -49,7 +49,7 @@ public class Framework {
 				  System.out.println("env="+env);
 	}
 	
-	public  void initializeRepository() throws IOException
+	public static void initializeRepository() throws IOException
 	{
 		
 		
@@ -110,14 +110,16 @@ public class Framework {
 			if(!ObjectValue.isEmpty())
 				break;
 		}
-		
+		String MatchingType="";
 		switch(PropertyName)
         {
             case "ID":
                 System.out.println("ID Matched");
+                MatchingType="ID";
                 break;
             case "Name":
                 System.out.println("two");
+                MatchingType="Name";
                 break;
             case "ClassName":
                 System.out.println("three");
@@ -138,7 +140,7 @@ public class Framework {
                 System.out.println("no match");
         }
 		
-		return ObjectValue;
+		return MatchingType+"_"+PropertyValue;
 	}
 	
 }
