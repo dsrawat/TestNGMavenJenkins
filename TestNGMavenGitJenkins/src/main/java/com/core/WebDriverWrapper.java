@@ -17,9 +17,6 @@ public class WebDriverWrapper {
 		if(BrowserType.equalsIgnoreCase("Chrome"))
 			{
 					
-			
-			
-			
 					System.setProperty("webdriver.chrome.driver",DriverPath+"\\chromedriver.exe");
 					capabilities=DesiredCapabilities.chrome();
 					ChromeOptions options=new ChromeOptions();
