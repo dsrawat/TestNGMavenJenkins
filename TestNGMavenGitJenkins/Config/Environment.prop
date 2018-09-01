@@ -4,4 +4,5 @@ Run_URL=TEST
 BrowserType=CHROME
 DriverPath=C:\\Driver
 RepositoryPath=C:\\ObjectRepository\\ObjectRepository.xls
-HeadlessBrowser=no
+TestData=C:\\ObjectRepository\\TestData.xls
+HeadlessBrowser=No

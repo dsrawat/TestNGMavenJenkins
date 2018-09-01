@@ -1,8 +1,11 @@
 package com.core;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 
 public class UIOperator {
@@ -32,27 +35,25 @@ public class UIOperator {
 		switch(values[0])
         {
             case "ID":
-                System.out.println("ID Matched");
                 ele=Framework.driver.findElement(By.id(values[1]));
                 break;
             case "Name":
-                System.out.println("two");
-               
+            	ele=Framework.driver.findElement(By.name(values[1]));
                 break;
             case "ClassName":
-                System.out.println("three");
+            	ele=Framework.driver.findElement(By.className(values[1]));
                 break;
             case "PartialLinkText":
-                System.out.println("three");
+            	ele=Framework.driver.findElement(By.partialLinkText(values[1]));
                 break;
             case "LinkText":
-                System.out.println("three");
+            	ele=Framework.driver.findElement(By.linkText(values[1]));
                 break;
             case "Xpath":
-                System.out.println("three");
+            	ele=Framework.driver.findElement(By.xpath(values[1]));
                 break;
             case "CSS":
-                System.out.println("three");
+            	ele=Framework.driver.findElement(By.cssSelector(values[1]));
                 break;
             default:
                 System.out.println("no match");
@@ -60,5 +61,25 @@ public class UIOperator {
 		
 		return ele;
 	}
+	
+	/*public static void takeSnapShot() throws Exception{
+
+        //Convert web driver object to TakeScreenshot
+
+        TakesScreenshot scrShot =((TakesScreenshot)Framework.driver);
+
+        //Call getScreenshotAs method to create image file
+
+                File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
+
+            //Move image file to new destination
+
+                File DestFile=new File(fileWithPath);
+
+                //Copy file at destination
+
+                FileUtils.copyFile(SrcFile, DestFile);
+
+    }*/
 
 }

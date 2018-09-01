@@ -61,7 +61,7 @@ public class Framework {
 	public String readObjectRepository(String ObjectName) throws IOException
 	{
 		HashMap<String,String> hs=null;
-		FileInputStream File=new FileInputStream(new File("C:\\ObjectRepository\\ObjectRepository.xls"));
+		FileInputStream File=new FileInputStream(new File(Framework.env.get("RepositoryPath")));
 		//Workbook wb=new XSSFWorkbook();
 		System.out.println("repo="+Framework.env.get("RepositoryPath"));
 		wb = new  HSSFWorkbook(File);
@@ -123,18 +123,19 @@ public class Framework {
                 break;
             case "ClassName":
                 System.out.println("three");
+                MatchingType="ClassName";
                 break;
             case "PartialLinkText":
-                System.out.println("three");
+            	MatchingType="PartialLinkText";
                 break;
             case "LinkText":
-                System.out.println("three");
+            	MatchingType="LinkText";
                 break;
             case "Xpath":
-                System.out.println("three");
+            	MatchingType="Xpath";
                 break;
             case "CSS":
-                System.out.println("three");
+            	MatchingType="CSS";
                 break;
             default:
                 System.out.println("no match");
