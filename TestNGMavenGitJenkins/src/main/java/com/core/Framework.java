@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -20,6 +21,9 @@ public class Framework {
 	public static WebDriverWrapper driverWrapper;
 	public static WebDriver driver;
 	public static HashMap<String,String> env=new HashMap<String,String>();
+	public static Reporter Report=new Reporter();
+	public static HashMap<String,String> Data=new HashMap<String,String>();
+	public static String ReportPath="";
 	HSSFWorkbook wb;
 	HSSFSheet sh;
 	public static void startDriver() throws IOException
@@ -142,6 +146,65 @@ public class Framework {
         }
 		
 		return MatchingType+"_"+PropertyValue;
+	}
+	
+	public static HashMap<String,String> readTestData(String Heading) throws IOException
+	{
+		
+		HashMap<String,String> hs=null;
+		HSSFWorkbook wb;
+		HSSFSheet sh;
+		FileInputStream File=new FileInputStream(new File(Framework.env.get("TestData")));
+		//Workbook wb=new XSSFWorkbook();
+		//System.out.println("repo="+Framework.env.get("RepositoryPath"));
+		wb = new  HSSFWorkbook(File);
+		sh=wb.getSheetAt(0);
+		int rowcount=sh.getLastRowNum();
+		int colcount=sh.getRow(1).getLastCellNum();
+		//System.out.println("Row Count data="+rowcount);
+		//System.out.println("Column Count data="+colcount);
+		int matchedrow=0;
+		for(int k=0;k<rowcount;k++)
+		{
+			
+			 Row row = sh.getRow(k);
+			 if(row!=null)
+			 {
+			 
+			 //System.out.println("Cell value="+sh.getRow(k).getCell(0).toString());
+				 	if(sh.getRow(k).getCell(0).toString().equalsIgnoreCase(Heading))
+				 		{	
+				 			matchedrow=k;
+				 			break;
+				 		}
+			 }
+			 	
+		}
+		
+		//System.out.println("MatchedRow="+matchedrow);
+		colcount=sh.getRow(matchedrow+1).getLastCellNum();
+		//System.out.println("cell count="+colcount);
+		for(int i=matchedrow+2;i<=(matchedrow+2);i++)
+		{
+			for(int j=0;j<colcount;j++)
+			{
+				String Headin=sh.getRow(i-1).getCell(j).toString();
+				String Value=sh.getRow(i).getCell(j).toString();
+				
+				//System.out.println("Heading ="+sh.getRow(i-1).getCell(j).toString());
+				//System.out.print(" Value ="+sh.getRow(i).getCell(j).toString());
+				
+				Data.put(Headin,Value);
+			}
+		}
+		
+		System.out.println("Data="+Data);
+		
+		return Data;
+		
+		
+		
+		
 	}
 	
 }

@@ -6,20 +6,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Reporter {
+	static BufferedWriter bufferedWriter = null;
+	static FileWriter fileWriter = null;
 	
-	public static void createReport()
+	public static void reportStart()
 	{
 	
 	
-		File file = new File("D:\\MobilePhoneLists.html");
+		File file = new File(Framework.ReportPath+"\\TestReport.htm");
 		/*if(file.exists())
 		{
 			System.out.println("File already exist");
 		}
 		else
 		{*/
-				FileWriter fileWriter = null;
-				BufferedWriter bufferedWriter = null;
+				
+				
 				try 
 				{
 					fileWriter = new FileWriter(file);
@@ -34,23 +36,17 @@ public class Reporter {
 							"\r\n" + 
 							"td, th {\r\n" + 
 							"    border: 1px solid #dddddd;\r\n" + 
-							"    text-align: left;\r\n" + 
+							"    text-align: center;\r\n" + 
 							"    padding: 8px;\r\n" + 
 							"}\r\n" + 
 							"\r\n" + 
-							"tr:nth-child(even) {\r\n" + 
+							"tr:nth-child(odd) {\r\n" + 
 							"    background-color: #dddddd;\r\n" + 
-							"}</style></head><body><b><table><tbody><tr><th>Scenario Name</th><th>Description</th><th>Screenshot Link</th></tr><tr><td>This is first asdlfkjsldfkjasldfkj asldfkjasdl</td><td>Hello aslkdfl alfdkasdjlfdask asdfoiwero wel;ndsvnlak  lkjlkh</td></tr></tbody></table>" ;
+							"}</style></head><body>" ;
 			
 					bufferedWriter.write(htmlPage);
-			
-					bufferedWriter.append("</body></html>");
-			
-					System.out.println("Html page created");
-					bufferedWriter.flush();
-					fileWriter.flush();
-					bufferedWriter.close();
-					fileWriter.close();
+					
+				
 		
 				} 
 				catch (IOException e) 
@@ -63,6 +59,47 @@ public class Reporter {
 		
 		
 		
+	}
+	
+	public static void addScenario(String ScenarioName) throws IOException
+	{
+		
+		bufferedWriter.append("<b><table align=\"center\" width=\"100%\"><tbody><tr><th colspan=\"3\">Scenario Name="+ScenarioName+"</th></tr><tr><th>Scenario Step</th><th>Scenario Description</th><th>Step Status</th></tr>");
+		
+	}
+	
+	public static void addReportStep(String ScenarioStep,String Description,String Status,String ScreenshotLink) throws IOException
+	{
+		
+		bufferedWriter.append("<tr><td>"+ScenarioStep+"</td><td>"+Description+"</td><td>status</td></tr>");
+	}
+	
+	public static void endScenario() throws IOException
+	{
+		
+		bufferedWriter.append("</tbody></table>");
+		
+	}
+	
+	public static void ReportEnd()
+	{
+	
+		try {
+			
+		
+			bufferedWriter.append("</body></html>");
+			
+			System.out.println("Html page created");
+			bufferedWriter.flush();
+			fileWriter.flush();
+			bufferedWriter.close();
+			fileWriter.close();
+		}
+		catch (IOException e) 
+		{
+	// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

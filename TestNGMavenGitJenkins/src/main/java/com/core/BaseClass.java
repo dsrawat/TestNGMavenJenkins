@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -52,6 +53,7 @@ public class BaseClass {
 	        
 	        var1=var+"\\"+"Report"+java.time.LocalDate.now()+"_"+java.time.LocalTime.now().toString().replace(".","").replace(":","");
 			System.out.println(var1);
+			Framework.ReportPath=var1;
 			File file2 = new File(var1);
 	        if (!file2.exists()) {
 	            if (file2.mkdir()) {
@@ -68,7 +70,7 @@ public class BaseClass {
 			e.printStackTrace();
 		}
 		
-		Reporter.createReport();
+		Reporter.reportStart();
 		
 		
 	}
@@ -79,6 +81,8 @@ public class BaseClass {
 		
 		//Framework.driver.quit();
 		//Log.debug("************************Browser Closed*************************************************");
+		
+		Reporter.ReportEnd();
 	}
 	
 	@BeforeMethod
@@ -114,6 +118,24 @@ public class BaseClass {
             }
         }
 
+		
+	}
+	
+	@BeforeMethod
+	public void setTestData(Method result) throws IOException
+	{
+		System.out.println("curent execute Test Method="+result.getName());
+		Framework.Data=Framework.readTestData(result.getName());
+		Framework.Report.addScenario(result.getName());
+		
+	}
+	
+	@AfterMethod
+	public void setReportData(Method result) throws IOException
+	{
+		System.out.println("curent execute Test Method="+result.getName());
+		Framework.Data=Framework.readTestData(result.getName());
+		Framework.Report.endScenario();
 		
 	}
 	
