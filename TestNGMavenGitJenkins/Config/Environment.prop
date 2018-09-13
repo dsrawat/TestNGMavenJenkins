@@ -1,5 +1,5 @@
 UAT=https://www.facebook.com
-TEST=https://www.google.com
+TEST=https://www.Google.com
 Run_URL=TEST
 BrowserType=CHROME
 DriverPath=C:\\Driver

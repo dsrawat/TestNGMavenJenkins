@@ -71,7 +71,17 @@ public class Reporter {
 	public static void addReportStep(String ScenarioStep,String Description,String Status,String ScreenshotLink) throws IOException
 	{
 		
-		bufferedWriter.append("<tr><td>"+ScenarioStep+"</td><td>"+Description+"</td><td>status</td></tr>");
+		if(Status.equalsIgnoreCase("Fail"))
+		
+			bufferedWriter.append("<tr><td>"+ScenarioStep+"</td><td>"+Description+"</td><td style=\"color:red;\">"+Status+"</td></tr>");
+		else
+			bufferedWriter.append("<tr><td>"+ScenarioStep+"</td><td>"+Description+"</td><td style=\"color:green;\">"+Status+"</td></tr>");
+	}
+	
+	public static void addReportStepError(String ErrorRootCause) throws IOException
+	{
+		
+		bufferedWriter.append("<tr><td colspan=\"3\" style=\"color:red;\">"+ErrorRootCause+"</td></tr>");
 	}
 	
 	public static void endScenario() throws IOException

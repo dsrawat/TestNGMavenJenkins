@@ -7,6 +7,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Properties;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
@@ -24,6 +25,9 @@ public class Framework {
 	public static Reporter Report=new Reporter();
 	public static HashMap<String,String> Data=new HashMap<String,String>();
 	public static String ReportPath="";
+	public static String currentMethodName;
+	public static String currentClassName;
+	public static PDDocument document;
 	HSSFWorkbook wb;
 	HSSFSheet sh;
 	public static void startDriver() throws IOException

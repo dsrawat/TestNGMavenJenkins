@@ -39,28 +39,37 @@ public class Test1 extends BaseClass{
 	
 	
 	@Test
-	public void test1() throws IOException
+	public void test1() throws Exception
 	{
 		//HashMap<String,String> Data=readTestData(this.getClass().getSimpleName());
 		//Log.debug("************************test1 execution Start*********************************************");
 		UIOperator.OpenURL();
+		UIOperator.takeSnapShot();
 		UIOperator.enterText("GoogleSearch_TextBox",Framework.Data.get("SearchValue"));
+		UIOperator.takeSnapShot();
+		
+		Framework.Report.addReportStep("Step 1","Description 1","Pass","");
 		Assert.assertEquals(true, true);
-		Framework.Report.addReportStep("Step 1","Description 1","","");
 		//Log.debug("************************test1 execution Complete*************************************************");
-		Framework.Report.addReportStep("Step 2","Description 2","","");
-		Framework.Report.addReportStep("Step 3","Description 3","","");
+		Framework.Report.addReportStep("Step 2","Description 2","Fail","");
+		Framework.Report.addReportStep("Step 3","Description 3","Pass","");
+		
+		
+		 
 	}
 	
 	@Test
-	public void test2() throws IOException
+	public void test2() throws Exception
 	{
-		Framework.Report.addReportStep("Step 1","Description 1","","");
+		
+		UIOperator.OpenURL();
+		UIOperator.takeSnapShot();
+		Framework.Report.addReportStep("Step 1","Description 1","Pass","");
 		//Log.debug("************************test2 execution Start*********************************************");
 		Assert.assertEquals(true, true);
 		//Log.debug("************************test2 execution Complete*************************************************");
-		Framework.Report.addReportStep("Step 2","Description 2","","");
-		Framework.Report.addReportStep("Step 3","Description 3","","");
+		Framework.Report.addReportStep("Step 2","Description 2","Pass","");
+		Framework.Report.addReportStep("Step 3","Description 3","Fail","");
 	}
 	
 	

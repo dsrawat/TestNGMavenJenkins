@@ -19,21 +19,26 @@ public class Test2 extends BaseClass {
 	
 	
 	@Test
-	public void test3() throws IOException
+	public void test3() throws Exception
 	{
 		Log.debug("************************test1 execution Start*********************************************");
 		UIOperator.OpenURL();
+		UIOperator.takeSnapShot();
 		Framework.Report.addReportStep("Step 1","Description 1","","");
 		UIOperator.enterText("GoogleSearch_TextBox","Selenium");
+		UIOperator.takeSnapShot();
 		Assert.assertEquals(true, true);
 		Framework.Report.addReportStep("Step 2","Description 2","","");
+		UIOperator.takeSnapShot();
 		Log.debug("************************test1 execution Complete*************************************************");
 		
 	}
 	
 	@Test
-	public void test4() throws IOException
+	public void test4() throws Exception
 	{
+		UIOperator.OpenURL();
+		UIOperator.takeSnapShot();
 		Log.debug("************************test2 execution Start*********************************************");
 		Framework.Report.addReportStep("Step 1","Description 1","","");
 		

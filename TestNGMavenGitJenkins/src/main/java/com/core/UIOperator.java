@@ -1,12 +1,30 @@
 package com.core;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
+
+import ru.yandex.qatools.ashot.AShot;
+import ru.yandex.qatools.ashot.Screenshot;
+import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
+
+
 
 public class UIOperator {
 	
@@ -21,11 +39,19 @@ public class UIOperator {
 		
 	}
 	
-	public static void enterText(String OjbectName,String Value) throws IOException
+	public static void enterText(String ObjectName,String Value) throws IOException
 	{
-		String values[]=new Framework().readObjectRepository(OjbectName).split("_");
+		try {
+		String values[]=new Framework().readObjectRepository(ObjectName).split("_");
 		WebElement ele=add(values);
 		ele.sendKeys(Value);
+		}
+		catch(Exception e)
+		{
+			
+			Framework.Report.addReportStep("Step 5","Description 5","Fail","");
+			Framework.Report.addReportStepError("Unable to Enter Text of "+ObjectName);
+		}
 	}
 	
 	
@@ -62,24 +88,36 @@ public class UIOperator {
 		return ele;
 	}
 	
-	/*public static void takeSnapShot() throws Exception{
+	public static void takeSnapShot() throws Exception{
+		
+		String Screenshotname=Framework.currentMethodName+"-"+java.time.LocalDate.now()+"_"+java.time.LocalTime.now().toString().replace(".","").replace(":","");
+		Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(Framework.driver);
+		String FileName=BaseClass.var1+"\\"+Framework.currentClassName+"\\"+Framework.currentMethodName+"\\"+Screenshotname+".JPEG";
+	    ImageIO.write(fpScreenshot.getImage(),"JPEG",new File(FileName));
+	    
+	  
+	          
+	       
+	      
+	      
+	      
+	      InputStream in = new FileInputStream(new File(FileName));
+	      BufferedImage bimg = ImageIO.read(in);
+	      float width = bimg.getWidth();
+	      float height = bimg.getHeight();
+	      PDPage page1 = new PDPage(new PDRectangle(width, height));
+	      Framework.document.addPage(page1); 
+	      PDImageXObject pdImage1 = PDImageXObject.createFromFile(FileName,Framework.document);
+	      PDPageContentStream contentStream = new PDPageContentStream(Framework.document, page1);
+	      contentStream.drawImage(pdImage1, 0, 0);
+	      contentStream.close();
+	      in.close();
 
-        //Convert web driver object to TakeScreenshot
-
-        TakesScreenshot scrShot =((TakesScreenshot)Framework.driver);
-
-        //Call getScreenshotAs method to create image file
-
-                File SrcFile=scrShot.getScreenshotAs(OutputType.FILE);
-
-            //Move image file to new destination
-
-                File DestFile=new File(fileWithPath);
-
-                //Copy file at destination
-
-                FileUtils.copyFile(SrcFile, DestFile);
-
-    }*/
+	      Framework.document.save(BaseClass.var1+"\\"+Framework.currentClassName+"\\"+Framework.currentMethodName+"\\Screens.pdf");
+	      //Framework.document.close();
+	      
+	      
+	      
+    }
 
 }

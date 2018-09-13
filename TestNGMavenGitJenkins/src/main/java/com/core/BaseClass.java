@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
@@ -107,7 +108,7 @@ public class BaseClass {
 		
 		System.out.println("Name of the class"+this.getClass().getSimpleName());
 		//String folderpath=;
-		
+		Framework.currentClassName=this.getClass().getSimpleName();
 		System.out.println(System.getProperty("user.dir")+this.getClass().getSimpleName());
 		File file = new File(var1+"\\"+this.getClass().getSimpleName());
         if (!file.exists()) {
@@ -125,8 +126,20 @@ public class BaseClass {
 	public void setTestData(Method result) throws IOException
 	{
 		System.out.println("curent execute Test Method="+result.getName());
+		Framework.currentMethodName=result.getName();
+		Framework.document = new PDDocument();
+		File file = new File(var1+"\\"+Framework.currentClassName+"\\"+Framework.currentMethodName);
+        if (!file.exists()) {
+            if (file.mkdir()) {
+                System.out.println("Directory is created!");
+            } else {
+                System.out.println("Failed to create directory!");
+            }
+        }
+		
 		Framework.Data=Framework.readTestData(result.getName());
 		Framework.Report.addScenario(result.getName());
+		
 		
 	}
 	
@@ -136,6 +149,7 @@ public class BaseClass {
 		System.out.println("curent execute Test Method="+result.getName());
 		Framework.Data=Framework.readTestData(result.getName());
 		Framework.Report.endScenario();
+		Framework.document.close();
 		
 	}
 	

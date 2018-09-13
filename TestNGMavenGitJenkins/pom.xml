@@ -73,6 +73,14 @@
     <artifactId>pdfbox</artifactId>
     <version>2.0.11</version>
 </dependency>
+
+
+<dependency>
+    <groupId>ru.yandex.qatools.ashot</groupId>
+    <artifactId>ashot</artifactId>
+    <version>1.5.3</version>
+</dependency>
+
     
   </dependencies>
 </project>
