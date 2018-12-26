@@ -29,13 +29,15 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 public class UIOperator {
 	
 	
-	
+	static String URL;
 	
 	public static void OpenURL()
 	{
-		String URL=Framework.env.get(Framework.env.get("Run_URL"));
-		Framework.driver.get(URL);
-		Framework.driver.manage().window().maximize();
+		 URL=Framework.env.get(Framework.env.get("Run_URL"));
+		/*Framework.driver.get(URL);
+		Framework.driver.manage().window().maximize();*/
+		 WebDriverWrapper.getDriver().get(URL);
+		 WebDriverWrapper.getDriver().manage().window().maximize();
 		
 	}
 	
@@ -64,7 +66,8 @@ public class UIOperator {
                 ele=Framework.driver.findElement(By.id(values[1]));
                 break;
             case "Name":
-            	ele=Framework.driver.findElement(By.name(values[1]));
+            	//ele=Framework.driver.findElement(By.name(values[1]));
+            	ele=WebDriverWrapper.getDriver().findElement(By.name(values[1]));
                 break;
             case "ClassName":
             	ele=Framework.driver.findElement(By.className(values[1]));

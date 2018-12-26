@@ -16,6 +16,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 
 import TestNGFramework.TestNGMavenGitJenkins.Test1;
 
@@ -79,17 +80,19 @@ public class BaseClass {
 	@AfterSuite
 	public void afterSuite()
 	{
+		System.out.println("inside after suite");
 		
-		//Framework.driver.quit();
 		//Log.debug("************************Browser Closed*************************************************");
-		
+		//Framework.driver.quit();
 		Reporter.ReportEnd();
 	}
 	
+	@Parameters({"browser"})
 	@BeforeMethod
-	public void beforeTest() throws IOException
+	public void beforeTest(String browser) throws IOException
 	{
-		Framework.startDriver();
+		Framework.startDriver(browser);
+		//WebDriverWrapper.getDriver().get(url);
 		//framework.driver.quit();
 		//Log.debug("************************Browser Closed*************************************************");
 	}
@@ -98,7 +101,9 @@ public class BaseClass {
 	public void afterTest() throws IOException
 	{
 		//framework.startDriver();
-		Framework.driver.quit();
+		//Framework.driver.close();
+		//Framework.driver.quit();
+		WebDriverWrapper.getDriver().quit();
 		//Log.debug("************************Browser Closed*************************************************");
 	}
 	

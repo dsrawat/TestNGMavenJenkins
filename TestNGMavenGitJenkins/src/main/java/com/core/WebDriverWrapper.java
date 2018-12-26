@@ -1,32 +1,70 @@
 package com.core;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class WebDriverWrapper {
 	
-	WebDriver driver;
-	DesiredCapabilities capabilities=null;
+	//static WebDriver driver;
+	static ThreadLocal<RemoteWebDriver> driver = new ThreadLocal<>();
+	static DesiredCapabilities capabilities=null;
 	
-	public WebDriver initializeDriver(String BrowserType,String DriverPath)
+	public static synchronized void initializeDriver(String BrowserType,String DriverPath) throws MalformedURLException
 	{
-		if(BrowserType.equalsIgnoreCase("Chrome"))
+		
+		System.out.println("Browser type="+BrowserType);
+		if(BrowserType.equalsIgnoreCase("chrome"))
 			{
-					
-					System.setProperty("webdriver.chrome.driver",DriverPath+"\\chromedriver.exe");
+					System.out.println("Browser Chrome inside");
+			
 					capabilities=DesiredCapabilities.chrome();
+					capabilities.setBrowserName("chrome");
+					capabilities.setPlatform(Platform.WINDOWS);
+					
 					ChromeOptions options=new ChromeOptions();
-					if(Framework.env.get("HeadlessBrowser").equalsIgnoreCase("Yes"))
+					if(Framework.env.get("Chrome_HeadlessBrowser").equalsIgnoreCase("Yes"))
 						options.addArguments("--headless");
 					options.setBinary(new File("C:\\Program Files (x86)\\Google\\Chrome Beta\\Application\\chrome.exe"));
-					driver=new ChromeDriver(options);
+					options.setCapability(CapabilityType.BROWSER_NAME, "chrome");
+					options.setCapability(CapabilityType.PLATFORM_NAME, "WINDOWS");
+					driver.set(new RemoteWebDriver(new URL("http://localhost:5557/wd/hub"), options));
 			}
-		
-		return driver;
+		else if(BrowserType.equalsIgnoreCase("firefox"))
+		{
+			System.out.println("Browser firefox inside");
+			
+			
+			capabilities=DesiredCapabilities.firefox();
+			capabilities.setBrowserName("firefox");
+			capabilities.setPlatform(Platform.WINDOWS);
+			FirefoxOptions options=new FirefoxOptions();
+			options.setCapability(CapabilityType.BROWSER_NAME, "firefox");
+			options.setCapability(CapabilityType.PLATFORM_NAME, "WINDOWS");
+			//ChromeOptions options=new ChromeOptions();
+			if(Framework.env.get("Firefox_HeadlessBrowser").equalsIgnoreCase("Yes"))
+				options.addArguments("--headless");
+			options.setBinary("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+			//driver=new ChromeDriver(options);
+			//driver= new RemoteWebDriver(new URL("http://192.168.0.110:5556/wd/hub"),capabilities);
+			driver.set(new RemoteWebDriver(new URL("http://localhost:5556/wd/hub"), options));
 	}
+		
+		//return driver;
+	}
+	
+	public static synchronized WebDriver getDriver() {
+        //Get driver from ThreadLocalMap
+        return driver.get();
+    }
 
 }

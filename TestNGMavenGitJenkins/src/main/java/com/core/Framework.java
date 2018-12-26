@@ -30,11 +30,14 @@ public class Framework {
 	public static PDDocument document;
 	HSSFWorkbook wb;
 	HSSFSheet sh;
-	public static void startDriver() throws IOException
+	
+	
+	public static void startDriver(String browser) throws IOException
 	{
 		
 		driverWrapper=new WebDriverWrapper();
-		driver=driverWrapper.initializeDriver(env.get("BrowserType"),env.get("DriverPath"));
+		//driver=driverWrapper.initializeDriver(env.get("BrowserType"),env.get("DriverPath"));
+		WebDriverWrapper.initializeDriver(browser,env.get("DriverPath"));
 		initializeRepository();
 	}
 	

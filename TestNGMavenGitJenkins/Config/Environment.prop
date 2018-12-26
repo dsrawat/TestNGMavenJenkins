@@ -5,4 +5,5 @@ BrowserType=CHROME
 DriverPath=C:\\Driver
 RepositoryPath=C:\\ObjectRepository\\ObjectRepository.xls
 TestData=C:\\ObjectRepository\\TestData.xls
-HeadlessBrowser=No
+Chrome_HeadlessBrowser=No
+Firefox_HeadlessBrowser=No
