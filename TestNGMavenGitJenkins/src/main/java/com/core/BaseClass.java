@@ -18,7 +18,6 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
-import TestNGFramework.TestNGMavenGitJenkins.Test1;
 
 public class BaseClass {
 	
