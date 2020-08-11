@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -17,28 +18,34 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+
 public class Framework {
 
 	public static WebDriverWrapper driverWrapper;
 	public static WebDriver driver;
 	public static HashMap<String,String> env=new HashMap<String,String>();
-	public static Reporter Report=new Reporter();
+	public static ExtentManager Report=new ExtentManager();
 	public static HashMap<String,String> Data=new HashMap<String,String>();
 	public static String ReportPath="";
 	public static String currentMethodName;
 	public static String currentClassName;
-	public static PDDocument document;
+	public static HashMap <Long,PDDocument>  document=new HashMap<Long,PDDocument>();
+	public static ExtentReports extent;
+	public static HashMap <Long,ExtentTest>extentTestMap = new HashMap<Long,ExtentTest>();
 	HSSFWorkbook wb;
 	HSSFSheet sh;
 	
 	
 	public static void startDriver(String browser) throws IOException
 	{
-		
+		System.out.println("StartDriver - Begin");
 		driverWrapper=new WebDriverWrapper();
 		//driver=driverWrapper.initializeDriver(env.get("BrowserType"),env.get("DriverPath"));
 		WebDriverWrapper.initializeDriver(browser,env.get("DriverPath"));
 		initializeRepository();
+		System.out.println("StartDriver - End");
 	}
 	
 	public static void collectEnvironmentData() throws IOException{

@@ -7,7 +7,23 @@ import java.io.IOException;
 
 public class Reporter {
 	static BufferedWriter bufferedWriter = null;
-	static FileWriter fileWriter = null;
+	static FileWriter fileWriter=null;
+	static ThreadLocal<BufferedWriter> reporter=new ThreadLocal<>();
+	
+	public static void initializeReport() throws IOException
+	{
+		fileWriter = new FileWriter(new File(Framework.ReportPath+"\\TestReport.htm"));
+		reporter.set(new BufferedWriter(fileWriter));
+		reportStart();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public static void reportStart()
 	{
@@ -25,7 +41,9 @@ public class Reporter {
 				try 
 				{
 					fileWriter = new FileWriter(file);
-					bufferedWriter = new BufferedWriter(fileWriter);
+					
+					 bufferedWriter = reporter.get();
+					 bufferedWriter = new BufferedWriter(fileWriter);
 			
 					String htmlPage = "<html><head><style><style>\r\n" + 
 							"table {\r\n" + 
@@ -44,8 +62,8 @@ public class Reporter {
 							"    background-color: #dddddd;\r\n" + 
 							"}</style></head><body>" ;
 			
-					bufferedWriter.write(htmlPage);
-					
+					//bufferedWriter.write(htmlPage);
+					bufferedWriter.append(htmlPage);
 				
 		
 				} 
@@ -91,7 +109,13 @@ public class Reporter {
 		
 	}
 	
-	public static void ReportEnd()
+	public static void reportWrite()
+	{
+		
+		
+	}
+	
+	public synchronized static void ReportEnd()
 	{
 	
 		try {

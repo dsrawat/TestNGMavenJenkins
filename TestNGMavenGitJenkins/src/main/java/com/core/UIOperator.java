@@ -18,6 +18,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import ru.yandex.qatools.ashot.AShot;
@@ -41,6 +42,22 @@ public class UIOperator {
 		
 	}
 	
+	public static void click(String ObjectName) throws IOException
+	{
+		try {
+			String values[]=new Framework().readObjectRepository(ObjectName).split("_");
+			WebElement ele=add(values);
+			ele.click();
+			}
+			catch(Exception e)
+			{
+				
+				//Framework.Report.addReportStep("Step 5","Description 5","Fail","");
+				//Framework.Report.addReportStepError("Unable to Enter Text of "+ObjectName);
+			}
+		
+	}
+	
 	public static void enterText(String ObjectName,String Value) throws IOException
 	{
 		try {
@@ -51,8 +68,8 @@ public class UIOperator {
 		catch(Exception e)
 		{
 			
-			Framework.Report.addReportStep("Step 5","Description 5","Fail","");
-			Framework.Report.addReportStepError("Unable to Enter Text of "+ObjectName);
+			//Framework.Report.addReportStep("Step","Description","Fail","");
+			//Framework.Report.addReportStepError("Unable to Enter Text of "+ObjectName);
 		}
 	}
 	
@@ -63,7 +80,7 @@ public class UIOperator {
 		switch(values[0])
         {
             case "ID":
-                ele=Framework.driver.findElement(By.id(values[1]));
+                ele=WebDriverWrapper.getDriver().findElement(By.id(values[1]));
                 break;
             case "Name":
             	//ele=Framework.driver.findElement(By.name(values[1]));
@@ -91,36 +108,65 @@ public class UIOperator {
 		return ele;
 	}
 	
-	public static void takeSnapShot() throws Exception{
+	public synchronized void takeSnapShot(String ClassName,String MethodName) throws Exception{
 		
-		String Screenshotname=Framework.currentMethodName+"-"+java.time.LocalDate.now()+"_"+java.time.LocalTime.now().toString().replace(".","").replace(":","");
-		Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(Framework.driver);
-		String FileName=BaseClass.var1+"\\"+Framework.currentClassName+"\\"+Framework.currentMethodName+"\\"+Screenshotname+".JPEG";
-	    ImageIO.write(fpScreenshot.getImage(),"JPEG",new File(FileName));
+		System.out.println("inside screenshot method and current Class is ="+ClassName);
+		System.out.println("inside screenshot method and current method is ="+MethodName);
+		
+		int a=ClassName.lastIndexOf(".");
+		String NewClass=ClassName.substring(a+1);
+		System.out.println("inside screenshot method and current Class is ="+NewClass);
+		//System.out.println("class name ="+new ITestContext().getAllTestMethods()[0].getInstance().getClass())
+		String Screenshotname=MethodName+"-"+java.time.LocalDate.now()+"_"+java.time.LocalTime.now().toString().replace(".","").replace(":","");
+		WebDriver driver=WebDriverWrapper.getDriver();
+		 Screenshot fpScreenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
+		String FileName=Framework.ReportPath+"\\"+NewClass+"\\"+MethodName+"\\"+Screenshotname+".JPEG";
+		BufferedImage b=fpScreenshot.getImage();
+	    ImageIO.write(b,"JPEG",new File(FileName));
 	    
 	  
 	          
-	       
+	    //Framework.document.put(Thread.currentThread().getId(), new PDDocument().addPage(page)); 
 	      
 	      
 	      
 	      InputStream in = new FileInputStream(new File(FileName));
 	      BufferedImage bimg = ImageIO.read(in);
+	      
 	      float width = bimg.getWidth();
 	      float height = bimg.getHeight();
 	      PDPage page1 = new PDPage(new PDRectangle(width, height));
-	      Framework.document.addPage(page1); 
-	      PDImageXObject pdImage1 = PDImageXObject.createFromFile(FileName,Framework.document);
-	      PDPageContentStream contentStream = new PDPageContentStream(Framework.document, page1);
+	      System.out.println("Framework.document="+Framework.document);
+	   //PDDocument doc=new PDDocument();
+			//doc.addPage(page1);
+	     // Framework.document.addPage(page1); 
+	      Framework.document.get(Thread.currentThread().getId()).addPage(page1);
+	      //Framework.document.put(Thread.currentThread().getId(), doc);
+	      PDImageXObject pdImage1 = PDImageXObject.createFromFile(FileName,Framework.document.get(Thread.currentThread().getId()));
+	      PDPageContentStream contentStream = new PDPageContentStream(Framework.document.get(Thread.currentThread().getId()), page1);
 	      contentStream.drawImage(pdImage1, 0, 0);
+	      bimg.flush();
 	      contentStream.close();
 	      in.close();
 
-	      Framework.document.save(BaseClass.var1+"\\"+Framework.currentClassName+"\\"+Framework.currentMethodName+"\\Screens.pdf");
+	      System.out.println("Screen="+Framework.ReportPath+"\\"+NewClass+"\\"+MethodName+"\\"+MethodName+"Screens.pdf");
+	      Framework.document.get(Thread.currentThread().getId()).save(Framework.ReportPath+"\\"+NewClass+"\\"+MethodName+"\\"+MethodName+"Screens.pdf");
+	      //Framework.document.get(Thread.currentThread().getId()).save("");
 	      //Framework.document.close();
 	      
 	      
 	      
     }
 
+	public static synchronized Long getCurrentThreadID()
+	{
+		System.out.print("Thread ID in method ="+Thread.currentThread().getId());
+		Long threadID= Thread.currentThread().getId();
+		return threadID;
+	}
+	
+	public static synchronized Thread getCurrentThread()
+	{
+		return Thread.currentThread();
+	}
 }

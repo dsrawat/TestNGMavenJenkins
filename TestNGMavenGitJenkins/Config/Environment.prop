@@ -1,9 +1,10 @@
 UAT=https://www.facebook.com
-TEST=https://www.Google.com
+TEST=https://www.google.com
 Run_URL=TEST
-BrowserType=CHROME
-DriverPath=C:\\Driver
+BrowserType=firefox
+DriverPath=C:\\Driver\\New folder\\geckodriver-v0.26.0-win64
 RepositoryPath=C:\\ObjectRepository\\ObjectRepository.xls
 TestData=C:\\ObjectRepository\\TestData.xls
 Chrome_HeadlessBrowser=No
 Firefox_HeadlessBrowser=No
+GenerateScreenshot=No

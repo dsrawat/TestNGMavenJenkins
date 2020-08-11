@@ -3,23 +3,42 @@
 <!-- hello -->
 
 
-<suite name="Parallel Tests" verbose="1" parallel="tests" thread-count="10">
 
-<test name="Simple Test4">
+<suite name="Parallel Tests"   parallel="methods" thread-count="4" verbose="1">
+<listeners>
+<listener class-name="com.core.GenerateReport"/>
+</listeners>
+
+<test name="Simple Test1">
+<parameter name="browser" value="firefox"/>
+<groups>
+    <run>
+      <include name="SmokeTest"/>
+    </run>
+  </groups>
+<classes>
+<class name="TestNGFramework.TestNGMavenGitJenkins.Test1"/>
+
+</classes>
+</test>
+
+<test name="Simple Test2">
 <parameter name="browser" value="chrome"/>
+<groups>
+    <run>
+      <include name="SmokeTest"/>
+    </run>
+  </groups>
 <classes>
 <class name="TestNGFramework.TestNGMavenGitJenkins.Test2"/>
 
 </classes>
 </test>
 
-<test name="Simple Test3">
-<parameter name="browser" value="firefox"/>
-<classes>
-<class name="TestNGFramework.TestNGMavenGitJenkins.Test1"/>
 
-</classes>
-</test>
+
+
+
 
 
 </suite>
